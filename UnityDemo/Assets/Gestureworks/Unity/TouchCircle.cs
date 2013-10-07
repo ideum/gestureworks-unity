@@ -66,7 +66,7 @@ public class TouchCircle {
 		}
 		
 		ringPosition.Set(x, y, z);
-		ring.transform.position = Camera.main.ScreenToViewportPoint(ringPosition);
+		ring.transform.position = GestureWorksUnity.Instance.GameCamera.ScreenToViewportPoint(ringPosition);
 		
 		if(showEventInfo)
 		{

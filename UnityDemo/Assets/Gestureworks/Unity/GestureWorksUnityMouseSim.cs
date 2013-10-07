@@ -61,6 +61,16 @@ public class GestureWorksUnityMouseSim {
 	
 	private Dictionary<int, TouchCircle> mouseCircles = new Dictionary<int, TouchCircle>();
 	
+	private List<int> touchDownEvents = new List<int>();
+	
+	private Camera GameCamera
+	{
+		get
+		{
+			return GestureWorksUnity.Instance.GameCamera;	
+		}
+	}
+	
 	public GestureWorksUnityMouseSim()
 	{
 		
@@ -73,6 +83,26 @@ public class GestureWorksUnityMouseSim {
 		initialized = true;
 	}
 	
+	public void ClearMousePoints()
+	{
+		foreach(TouchCircle circle in mouseCircles.Values)
+		{
+			circle.RemoveRing();	
+		}
+		
+		mouseCircles.Clear();
+		
+		// For all remaining touch down events GestureWorks
+		// needs a touch up
+		foreach(int touchDown in touchDownEvents)
+		{
+			TouchEvent rem_mouseEvent = new TouchEvent();
+			rem_mouseEvent.TouchEventID = touchDown;
+			rem_mouseEvent.Status = TouchStatus.TOUCHREMOVED;
+			gestureWorksCore.AddEvent(rem_mouseEvent);
+		}
+	}
+	
 	public void Update()
 	{
 		if(!initialized)
@@ -83,13 +113,15 @@ public class GestureWorksUnityMouseSim {
 		// Mouse DOWN LEFT
 		if(Input.GetMouseButtonDown(0)) 
 		{
-			Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+			Vector2 mousePos = GameCamera.ScreenToViewportPoint(Input.mousePosition);
 			TouchEvent new_mouseEvent = new TouchEvent();
 			new_mouseEvent.TouchEventID = leftMouseEventId;
 			new_mouseEvent.Status = TouchStatus.TOUCHADDED;
 			SetTouchEventPosition(mousePos, ref new_mouseEvent);
 			
 			gestureWorksCore.AddEvent(new_mouseEvent);
+			
+			touchDownEvents.Add(leftMouseEventId);
 			
 			if(MouseCirclesEnabled)
 			{
@@ -107,7 +139,7 @@ public class GestureWorksUnityMouseSim {
 		// Mouse DRAG LEFT
 		if(Input.GetMouseButton(0)) 
 		{
-			Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+			Vector2 mousePos = GameCamera.ScreenToViewportPoint(Input.mousePosition);
 			TouchEvent updt_mouseEvent = new TouchEvent();
 			updt_mouseEvent.TouchEventID = leftMouseEventId;
 			updt_mouseEvent.Status = TouchStatus.TOUCHUPDATE;
@@ -129,7 +161,7 @@ public class GestureWorksUnityMouseSim {
 		// Mouse UP LEFT
 		if(Input.GetMouseButtonUp(0)) 
 		{
-			Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+			Vector2 mousePos = GameCamera.ScreenToViewportPoint(Input.mousePosition);
 			TouchEvent rem_mouseEvent = new TouchEvent();
 			rem_mouseEvent.TouchEventID = leftMouseEventId;
 			rem_mouseEvent.Status = TouchStatus.TOUCHREMOVED;
@@ -146,6 +178,8 @@ public class GestureWorksUnityMouseSim {
 				}
 			}
 			
+			touchDownEvents.Remove(leftMouseEventId);
+			
 			leftMouseEventId++;
 			
 			if(leftMouseEventId > LeftMouseLimitId)
@@ -160,20 +194,23 @@ public class GestureWorksUnityMouseSim {
 			Vector3 pointA, pointB;
 			FindRightMousePositions(Input.mousePosition, out pointA, out pointB);
 			
-			Vector2 mousePosA = Camera.main.ScreenToViewportPoint(pointA);
+			Vector2 mousePosA = GameCamera.ScreenToViewportPoint(pointA);
 			TouchEvent new_mouseEventA = new TouchEvent();
 			new_mouseEventA.TouchEventID = rightAMouseEventId;
 			new_mouseEventA.Status = TouchStatus.TOUCHADDED;
 			SetTouchEventPosition(mousePosA, ref new_mouseEventA);
 			gestureWorksCore.AddEvent(new_mouseEventA);
 			
-			Vector2 mousePosB = Camera.main.ScreenToViewportPoint(pointB);
+			Vector2 mousePosB = GameCamera.ScreenToViewportPoint(pointB);
 			TouchEvent new_mouseEventB = new TouchEvent();
 			new_mouseEventB.TouchEventID = rightBMouseEventId;
 			new_mouseEventB.Status = TouchStatus.TOUCHADDED;
 			SetTouchEventPosition(mousePosB, ref new_mouseEventB);
 			gestureWorksCore.AddEvent(new_mouseEventB);
-
+			
+			touchDownEvents.Add(rightAMouseEventId);
+			touchDownEvents.Add(rightBMouseEventId);
+			
 			if(MouseCirclesEnabled)
 			{
 				TouchCircle mouseCircleA = new TouchCircle(rightAMouseEventId,
@@ -211,7 +248,7 @@ public class GestureWorksUnityMouseSim {
 			Vector3 pointA, pointB;
 			FindRightMousePositions(Input.mousePosition, out pointA, out pointB);
 			
-			Vector2 mousePosA = Camera.main.ScreenToViewportPoint(pointA);
+			Vector2 mousePosA = GameCamera.ScreenToViewportPoint(pointA);
 			TouchEvent updt_mouseEventA = new TouchEvent();
 			updt_mouseEventA.TouchEventID = rightAMouseEventId;
 			updt_mouseEventA.Status = TouchStatus.TOUCHUPDATE;
@@ -219,7 +256,7 @@ public class GestureWorksUnityMouseSim {
 			
 			gestureWorksCore.AddEvent(updt_mouseEventA);
 			
-			Vector2 mousePosB = Camera.main.ScreenToViewportPoint(pointB);
+			Vector2 mousePosB = GameCamera.ScreenToViewportPoint(pointB);
 			TouchEvent updt_mouseEventB = new TouchEvent();
 			updt_mouseEventB.TouchEventID = rightBMouseEventId;
 			updt_mouseEventB.Status = TouchStatus.TOUCHUPDATE;
@@ -251,7 +288,7 @@ public class GestureWorksUnityMouseSim {
 			Vector3 pointA, pointB;
 			FindRightMousePositions(Input.mousePosition, out pointA, out pointB);
 			
-			Vector2 mousePosA = Camera.main.ScreenToViewportPoint(pointA);
+			Vector2 mousePosA = GameCamera.ScreenToViewportPoint(pointA);
 			TouchEvent rem_mouseEventA = new TouchEvent();
 			rem_mouseEventA.TouchEventID = rightAMouseEventId;
 			rem_mouseEventA.Status = TouchStatus.TOUCHREMOVED;
@@ -259,7 +296,7 @@ public class GestureWorksUnityMouseSim {
 			
 			gestureWorksCore.AddEvent(rem_mouseEventA);
 			
-			Vector2 mousePosB = Camera.main.ScreenToViewportPoint(pointB);
+			Vector2 mousePosB = GameCamera.ScreenToViewportPoint(pointB);
 			TouchEvent rem_mouseEventB = new TouchEvent();
 			rem_mouseEventB.TouchEventID = rightBMouseEventId;
 			rem_mouseEventB.Status = TouchStatus.TOUCHREMOVED;
@@ -281,6 +318,9 @@ public class GestureWorksUnityMouseSim {
 					mouseCircles.Remove(rightBMouseEventId);
 				}
 			}
+			
+			touchDownEvents.Remove(rightAMouseEventId);
+			touchDownEvents.Remove(rightBMouseEventId);
 		
 			rightAMouseEventId++;
 			if(rightAMouseEventId > RightAMouseLimitId)

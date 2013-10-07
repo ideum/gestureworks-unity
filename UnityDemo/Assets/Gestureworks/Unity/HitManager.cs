@@ -21,25 +21,15 @@ namespace GestureWorksCoreNET.Unity {
 	
 	public class HitManager {
 	
-		private RaycastHit Hit;
-		private static Camera Cam;
-		
-		public HitManager(Camera asSeenByCamera){
-			Hit = new RaycastHit();
-			SetHitCamera(asSeenByCamera);
-		}
-	
-		private void SetHitCamera(Camera asSeenByCamera){
-			// TODO: Enable more options for cameras
-			Cam = asSeenByCamera; 
-			
-		}
+		private RaycastHit Hit = new RaycastHit();
 		
 		public bool DetectHitSingle(float screenPointX, float screenPointY, out string objectGestureName)
 		{
+			Camera camera = GestureWorksUnity.Instance.GameCamera;
+			
 			Vector3 fingerPosition = new Vector3(screenPointX, screenPointY, 0.0f);
 			
-			Ray ray = Cam.ScreenPointToRay(fingerPosition);
+			Ray ray = camera.ScreenPointToRay(fingerPosition);
 			
 			if(Physics.Raycast(ray, out Hit))
 			{	
@@ -62,9 +52,11 @@ namespace GestureWorksCoreNET.Unity {
 		
 		public static bool DetectHit(float screenPointX, float screenPointY, GameObject touchableObject, out RaycastHit hit){
 			
+			Camera camera = GestureWorksUnity.Instance.GameCamera;
+			
 			Vector3 fingerPosition = new Vector3(screenPointX, screenPointY, 0.0f);
 			
-			Ray ray = Cam.ScreenPointToRay(fingerPosition);
+			Ray ray = camera.ScreenPointToRay(fingerPosition);
 			
 			if(Physics.Raycast(ray, out hit)){
 				

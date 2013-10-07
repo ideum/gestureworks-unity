@@ -5,11 +5,6 @@ using GestureWorksCoreNET.Unity;
 
 public class TestObject : TouchObject {
 	
-	public TestObject()
-	{
-		
-	}
-	
 	// Use this for initialization
 	void Start () {
 	

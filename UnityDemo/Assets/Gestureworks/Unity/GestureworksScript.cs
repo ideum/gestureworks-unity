@@ -29,9 +29,28 @@ public class GestureworksScript : MonoBehaviour {
 	/// </summary>
 	public bool ForceMouseSimEnabled = false;
 	
+	/// <summary>
+	/// Log details of GestureWorks initialization.
+	/// </summary>
+	public bool LogInitializationDetails = true;
+	
+	/// <summary>
+	/// Log detauls of GestureWorks input.
+	/// </summary>
+	public bool LogInput = false;
+	
 	// Use this for initialization
 	void Start () {
-		GestureWorksUnity.Instance.Initialize();
+		
+		GestureWorksUnity.Instance.LogInitialization = LogInitializationDetails;
+		GestureWorksUnity.Instance.LogInputEnabled = LogInput;
+		
+		if(!GestureWorksUnity.Instance.Initialized) {
+			GestureWorksUnity.Instance.Initialize();
+		}
+		else {
+			GestureWorksUnity.Instance.RegisterGestureObjects();
+		}
 		
 		GestureWorksUnity.Instance.ShowTouchPoints = ShowTouchPoints;
 		GestureWorksUnity.Instance.ShowTouchEventInfo = ShowTouchPointsEventInfo;
@@ -46,5 +65,52 @@ public class GestureworksScript : MonoBehaviour {
 	
 	void OnApplicationQuit() {
 		GestureWorksUnity.Instance.DeregisterAllTouchObjects();
+		
+		GestureWorksUnity.Instance.ClearTouchPoints();
+	}
+	
+	public void SwitchScenes(string newSceneName) {
+		
+		StartCoroutine(UnloadScene(true, newSceneName));
+	}
+	
+	public void SwitchScenes(int index) {
+		
+		StartCoroutine(UnloadScene(true, "", index));
+	}
+	
+	public IEnumerator UnloadScene(bool switchToNewScene = false, 
+									string newSceneName = "", 
+									int newSceneIndex = -1) {
+		
+		GestureWorksUnity.Instance.Loaded = false;
+		GestureWorksUnity.Instance.ProcessingGestures = false;
+		if(GestureWorksUnity.Instance.ProcessingGestures)
+		{
+			while(GestureWorksUnity.Instance.ProcessingGestures)
+			{
+				yield return new WaitForSeconds(0.1f);
+			}	
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.0f);	
+		}
+		
+		GestureWorksUnity.Instance.DeregisterAllTouchObjects();
+		
+		GestureWorksUnity.Instance.ClearTouchPoints();
+		
+		if(switchToNewScene)
+		{
+			if(newSceneIndex != -1)
+			{
+				Application.LoadLevel(newSceneIndex);	
+			}
+			else if(!string.IsNullOrEmpty(newSceneName))
+			{
+				Application.LoadLevel(newSceneName);	
+			}
+		}
 	}
 }

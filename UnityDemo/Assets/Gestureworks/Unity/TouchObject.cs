@@ -52,7 +52,7 @@ namespace GestureWorksCoreNET.Unity {
 		
 		public void MoveObjectInCameraPlane(GestureEvent gEvent)
 		{
-			Camera cam = Camera.main;
+			Camera cam = GestureWorksUnity.Instance.GameCamera;
 			
 			Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
 			

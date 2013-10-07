@@ -217,3 +217,5 @@ UnityDemo/Assets/Gestureworks/Core/GestureWorksCore*.*
 UnityDemo/Library/*
 UnityDemo/*.vcproj
 UnityDemo/*.sln
+UnityDemo/Temp*
+UnityDemo/*.csproj

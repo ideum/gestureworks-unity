@@ -76,6 +76,20 @@ public class GestureWorksUnity
 		}	
 	}
 	
+	private volatile bool loaded = false;
+	public bool Loaded
+	{
+		get { return loaded; }
+		set { loaded = value; }
+	}
+	
+	private volatile bool processingGestures = false;
+	public bool ProcessingGestures
+	{
+		get { return processingGestures; }
+		set { processingGestures = value; }
+	}
+	
 	private bool mouseSimEnabled = false;
 	public bool MouseSimEnabled
 	{
@@ -145,6 +159,22 @@ public class GestureWorksUnity
 		}
 	}
 	
+	private string ApplicationName
+	{
+		get
+		{
+			string[] applicationNameParts = Application.dataPath.Split(char.Parse("/"));
+			if(applicationNameParts.Length <= 1)
+			{
+				Debug.LogWarning("Could not find application name");
+				
+				return "";
+			}
+			
+			return applicationNameParts[applicationNameParts.Length - 2];
+		}
+	}
+	
 	private string CurrentSceneNameNoExtension
 	{
 		get
@@ -166,7 +196,7 @@ public class GestureWorksUnity
 	{
 		get
 		{
-			return "Unity - " + CurrentSceneName + " - " + CurrentSceneNameNoExtension + " - PC, Mac & Linux Standalone*";	
+			return "Unity - " + CurrentSceneName + " - " + ApplicationName + " - PC, Mac & Linux Standalone*";	
 		}
 	}
 	
@@ -188,6 +218,21 @@ public class GestureWorksUnity
 		set { gameWindowName = value; }
 	}
 	
+	private Camera gameCamera = null;
+	public Camera GameCamera
+	{
+		set { gameCamera = value; }
+		get
+		{
+			if(gameCamera != null)
+			{
+				return gameCamera;	
+			}
+			
+			return Camera.main;
+		}
+	}
+	
 	private string windowName = "";
 	
 	private List<TouchObject> gestureObjects = new List<TouchObject>();
@@ -202,11 +247,13 @@ public class GestureWorksUnity
 	
 	private HitManager hitManager;
 	
+	public bool LogInitialization { get; set; }
+	
 	public bool LogInputEnabled { get; set; }
 	
 	private GestureWorksUnity()
 	{
-		LogInputEnabled = false;
+		
 	}
 	
 	public void Initialize()
@@ -240,7 +287,7 @@ public class GestureWorksUnity
 			mouseSimEnabled = true;
 			windowName = EditorWindowName;
 			
-			Debug.Log("== NOTE: to touch the demo, you must build and run ==");
+			Debug.Log("== NOTE: To touch the game, you must build and run ==");
 			
 			dllFilePath = Application.dataPath.Replace("/", "\\") + DllFilePathEditor + DllFileName;
 			gmlFilePath = Application.dataPath.Replace("/", "\\") + GmlFilePathEditor + GmlFileName;
@@ -268,8 +315,11 @@ public class GestureWorksUnity
 			return false;
 		}
 		
-		Debug.Log("DLL file path: " + dllFilePath);
-		Debug.Log("GML file path: " + gmlFilePath);
+		if(LogInitialization)
+		{
+			Debug.Log("DLL file path: " + dllFilePath);
+			Debug.Log("GML file path: " + gmlFilePath);
+		}
 		
 		return true;
 	}
@@ -306,7 +356,7 @@ public class GestureWorksUnity
 			return false;
 		}
 		
-		hitManager = new HitManager(Camera.main);
+		hitManager = new HitManager();
 		
 		mouseSimulator.Initialize(gestureWorksCore);
 		
@@ -331,7 +381,12 @@ public class GestureWorksUnity
 			RegisterGestureObject(obj);
 		}
 		
-		Debug.Log ("RegisterGestureObjects found " + (gestureObjects.Count - currentTouchObjectCount) + " touch objects");
+		if(LogInitialization)
+		{
+			Debug.Log("RegisterGestureObjects found " + (gestureObjects.Count - currentTouchObjectCount) + " touch objects");
+		}
+		
+		loaded = true;
 	}
 	
 	public bool RegisterGestureObject(TouchObject obj)
@@ -347,14 +402,20 @@ public class GestureWorksUnity
 			return false;	
 		}
 		
-		Debug.Log ("Touch object " + obj.gameObject.name + " found.");
+		if(LogInitialization)
+		{
+			Debug.Log("Touch object " + obj.gameObject.name + " found.");
+		}
 		
 		gestureWorksCore.RegisterTouchObject(obj.GestureObjectName);
 		
 		foreach(string gesture in obj.SupportedGestures)
 		{
-			Debug.Log ("	Object has gesture " + gesture);	
-		
+			if(LogInitialization)
+			{
+				Debug.Log("	Object has gesture " + gesture);	
+			}
+			
 			gestureWorksCore.AddGesture(obj.GestureObjectName, gesture);
 		}
 		
@@ -385,12 +446,26 @@ public class GestureWorksUnity
 		gestureObjects.Remove(obj);
 	}
 	
+	public void ClearTouchPoints()
+	{
+		foreach(TouchCircle circle in touchCircles.Values)
+		{
+			circle.RemoveRing();	
+		}
+		
+		touchCircles.Clear();
+		
+		mouseSimulator.ClearMousePoints();
+	}
+	
 	public void Update()
 	{
-		if(!initialized)
+		if(!initialized || !loaded)
 		{
 			return;
 		}
+		
+		processingGestures = true;
 		
 		gestureWorksCore.ProcessFrame();
 		
@@ -411,6 +486,8 @@ public class GestureWorksUnity
 		gestureEvents = gestureWorksCore.ConsumeGestureEvents();
 		
 		UpdateGestureEvents();
+		
+		processingGestures = false;
 	}
 	
 	private void UpdateMouseEvents()
@@ -425,7 +502,7 @@ public class GestureWorksUnity
 	
 	private void LogPoints()
 	{
-		if(pointEvents == null)
+		if(pointEvents == null || !LogInputEnabled)
 		{
 			return;	
 		}
@@ -481,13 +558,19 @@ public class GestureWorksUnity
 				bool touchPointHitSomething = false;
 				if(hitSomething)
 				{
-					Debug.Log("Hit " + hitObjectName);
+					if(LogInputEnabled)
+					{
+						Debug.Log("Hit " + hitObjectName);
+					}
 					
 					foreach(TouchObject obj in gestureObjects)
 					{
 						if(obj.GestureObjectName == hitObjectName)
 						{
-							Debug.Log("Adding touch point to " + obj.GestureObjectName);
+							if(LogInputEnabled)
+							{
+								Debug.Log("Adding touch point to " + obj.GestureObjectName);
+							}
 							
 							gestureWorksCore.AddTouchPoint(obj.GestureObjectName, pEvent.PointId);
 							
@@ -500,7 +583,7 @@ public class GestureWorksUnity
 					
 				if(!touchPointHitSomething)
 				{
-					gestureWorksCore.AddTouchPoint(Camera.main.name, pEvent.PointId);
+					gestureWorksCore.AddTouchPoint(GameCamera.name, pEvent.PointId);
 				}
 			}
 				break;
