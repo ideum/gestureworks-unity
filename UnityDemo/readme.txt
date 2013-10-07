@@ -1,0 +1,1 @@
+To run copy GestureworksCore32.dll and GestureWorksCoreNet32.dll to \Assets\Gestureworks\Core
