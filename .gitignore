@@ -214,4 +214,6 @@ pip-log.txt
 .mr.developer.cfg
 
 UnityDemo/Assets/Gestureworks/Core/GestureWorksCore*.*
-UnityDemo/Library/Metadata*
+UnityDemo/Library/*
+UnityDemo/*.vcproj
+UnityDemo/*.sln
