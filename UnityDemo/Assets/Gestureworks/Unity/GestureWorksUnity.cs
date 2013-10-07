@@ -100,7 +100,7 @@ public class GestureWorksUnity
 	public bool ShowMouseEventInfo
 	{
 		get { return mouseSimulator.ShowMouseEventInfo; }
-		set { mouseSimulator.ShowMousePoints = value; }
+		set { mouseSimulator.ShowMouseEventInfo = value; }
 	}
 	
 	private bool showTouchPoints = true;
