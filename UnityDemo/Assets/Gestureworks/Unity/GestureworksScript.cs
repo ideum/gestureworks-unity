@@ -60,6 +60,17 @@ public class GestureworksScript : MonoBehaviour {
 	/// </summary>
 	public string GameWindowName = "";
 	
+	/// <summary>
+	/// Time in seconds since last touch event
+	/// </summary>
+	public float TimeSinceLastEvent
+	{
+		get
+		{
+			return GestureWorksUnity.Instance.TimeSinceLastEvent;
+		}
+	}
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -83,7 +94,7 @@ public class GestureworksScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		GestureWorksUnity.Instance.Update();
+		GestureWorksUnity.Instance.Update(Time.deltaTime);
 	}
 	
 	void OnApplicationQuit() {

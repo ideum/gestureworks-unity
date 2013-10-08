@@ -249,6 +249,12 @@ public class GestureWorksUnity
 		}
 	}
 	
+	private float timeSinceLastEvent = 0.0f;
+	public float TimeSinceLastEvent
+	{
+		get { return timeSinceLastEvent; }	
+	}
+	
 	private string windowName = "";
 	
 	private List<TouchObject> gestureObjects = new List<TouchObject>();
@@ -474,7 +480,7 @@ public class GestureWorksUnity
 		mouseSimulator.ClearMousePoints();
 	}
 	
-	public void Update()
+	public void Update(float deltaTime)
 	{
 		if(!initialized || !loaded)
 		{
@@ -502,6 +508,16 @@ public class GestureWorksUnity
 		gestureEvents = gestureWorksCore.ConsumeGestureEvents();
 		
 		UpdateGestureEvents();
+		
+		if((pointEvents == null || pointEvents.Count == 0) &&
+			(gestureEvents == null || gestureEvents.Count == 0))
+		{
+			timeSinceLastEvent += deltaTime;	
+		}
+		else
+		{
+			timeSinceLastEvent = 0.0f;	
+		}
 		
 		processingGestures = false;
 	}
