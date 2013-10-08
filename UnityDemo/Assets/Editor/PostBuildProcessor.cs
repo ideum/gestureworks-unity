@@ -21,12 +21,8 @@ using UnityEditor.Callbacks;
 
 public class PostBuildProcessor {
 	
-	private const string GmlFileName = "";
-	private const string DLLFileName = "";
-	
 	[PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject) {
-		
 		
 		if(target.ToString()=="StandaloneWindows"){
 			

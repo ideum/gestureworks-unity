@@ -44,6 +44,7 @@ namespace GestureWorksCoreNET.Unity {
 		}
 		
 		void Start(){
+			
 		}
 		
 		void Update(){

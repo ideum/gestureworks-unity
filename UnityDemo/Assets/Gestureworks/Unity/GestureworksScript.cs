@@ -1,4 +1,20 @@
-﻿using UnityEngine;
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+//  IDEUM
+//  Copyright 2011-2013 Ideum
+//  All Rights Reserved.
+//
+//  Gestureworks Unity
+//
+//  File:    GestureworksScript.cs
+//  Authors:  Ideum
+//
+//  NOTICE: Ideum permits you to use, modify, and distribute this file only
+//  in accordance with the terms of the license agreement accompanying it.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 
 public class GestureworksScript : MonoBehaviour {
@@ -35,7 +51,7 @@ public class GestureworksScript : MonoBehaviour {
 	public bool LogInitializationDetails = true;
 	
 	/// <summary>
-	/// Log detauls of GestureWorks input.
+	/// Log details of GestureWorks input.
 	/// </summary>
 	public bool LogInput = false;
 	
@@ -44,6 +60,7 @@ public class GestureworksScript : MonoBehaviour {
 		
 		GestureWorksUnity.Instance.LogInitialization = LogInitializationDetails;
 		GestureWorksUnity.Instance.LogInputEnabled = LogInput;
+		GestureWorksUnity.Instance.ForceMouseSimEnabled = ForceMouseSimEnabled;
 		
 		if(!GestureWorksUnity.Instance.Initialized) {
 			GestureWorksUnity.Instance.Initialize();
