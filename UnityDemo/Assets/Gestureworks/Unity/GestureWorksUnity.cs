@@ -226,7 +226,7 @@ public class GestureWorksUnity
 			{
 				Debug.LogWarning("GameWindow name not properly set");
 				
-				return ApplicationName;
+				return Application.loadedLevelName;
 			}
 			
 			return gameWindowName; 
@@ -253,6 +253,11 @@ public class GestureWorksUnity
 	public float TimeSinceLastEvent
 	{
 		get { return timeSinceLastEvent; }	
+	}
+	
+	public void ResetTimeSinceLastEvent()
+	{
+		timeSinceLastEvent = 0.0f;	
 	}
 	
 	private string windowName = "";

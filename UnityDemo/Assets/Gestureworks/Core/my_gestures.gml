@@ -182,8 +182,8 @@
 					<property ref="scale_dsy" active="false" delta_min="0.0000000001" delta_max="100"/>
 				</delta_filter>
 				<multiply_filter>
-					<property ref="scale_dsx" active="true" func="linear" factor="0.33"/>
-					<property ref="scale_dsy" active="true" func="linear" factor="0.33"/>
+					<property ref="scale_dsx" active="true" func="linear" factor="1.0"/>
+					<property ref="scale_dsy" active="true" func="linear" factor="1.0"/>
 				</multiply_filter>
 			</processing>
 			<mapping>
