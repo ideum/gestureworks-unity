@@ -226,7 +226,7 @@ public class GestureWorksUnity
 			{
 				Debug.LogWarning("GameWindow name not properly set");
 				
-				return CurrentSceneNameNoExtension;
+				return ApplicationName;
 			}
 			
 			return gameWindowName; 

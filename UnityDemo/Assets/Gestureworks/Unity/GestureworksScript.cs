@@ -55,9 +55,15 @@ public class GestureworksScript : MonoBehaviour {
 	/// </summary>
 	public bool LogInput = false;
 	
+	/// <summary>
+	/// The name of the game window for this game at runtime.
+	/// </summary>
+	public string GameWindowName = "";
+	
 	// Use this for initialization
 	void Start () {
 		
+		GestureWorksUnity.Instance.GameWindowName = GameWindowName;
 		GestureWorksUnity.Instance.LogInitialization = LogInitializationDetails;
 		GestureWorksUnity.Instance.LogInputEnabled = LogInput;
 		GestureWorksUnity.Instance.ForceMouseSimEnabled = ForceMouseSimEnabled;
