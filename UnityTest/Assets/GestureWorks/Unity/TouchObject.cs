@@ -95,7 +95,7 @@ namespace GestureWorksCoreNET.Unity {
 			
 			Vector3 prevPosition = prevRay.origin + prevRay.direction * prevEnter;
 			
-			gameObject.transform.Translate(newPosition - prevPosition);
+			gameObject.transform.position += (newPosition - prevPosition);
 		}
 		
 	}

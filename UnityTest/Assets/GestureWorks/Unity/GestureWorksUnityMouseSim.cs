@@ -73,13 +73,6 @@ public class GestureWorksUnityMouseSim {
 		set { rightMinDistance = value; }
 	}
 	
-	private bool mouseCirclesEnabled = true;
-	public bool MouseCirclesEnabled
-	{
-		get { return mouseCirclesEnabled; }
-		set { mouseCirclesEnabled = value; }	
-	}
-	
 	private Dictionary<int, TouchCircle> mouseCircles = new Dictionary<int, TouchCircle>();
 	
 	private List<int> touchDownEvents = new List<int>();
@@ -144,7 +137,7 @@ public class GestureWorksUnityMouseSim {
 			
 			touchDownEvents.Add(leftMouseEventId);
 			
-			if(MouseCirclesEnabled)
+			if(ShowMousePoints)
 			{
 				TouchCircle mouseCircle = new TouchCircle(leftMouseEventId,
 														  ShowMouseEventInfo,
@@ -168,7 +161,7 @@ public class GestureWorksUnityMouseSim {
 			
 			gestureWorksCore.AddEvent(updt_mouseEvent);
 			
-			if(MouseCirclesEnabled)
+			if(ShowMousePoints)
 			{
 				if(mouseCircles.ContainsKey(leftMouseEventId))
 				{
@@ -190,7 +183,7 @@ public class GestureWorksUnityMouseSim {
 			
 			gestureWorksCore.AddEvent(rem_mouseEvent);
 			
-			if(MouseCirclesEnabled)
+			if(ShowMousePoints)
 			{
 				if(mouseCircles.ContainsKey(leftMouseEventId))
 				{
@@ -231,7 +224,7 @@ public class GestureWorksUnityMouseSim {
 			touchDownEvents.Add(rightAMouseEventId);
 			touchDownEvents.Add(rightBMouseEventId);
 			
-			if(MouseCirclesEnabled)
+			if(ShowMousePoints)
 			{
 				TouchCircle mouseCircleA = new TouchCircle(rightAMouseEventId,
 															ShowMouseEventInfo,
@@ -284,7 +277,7 @@ public class GestureWorksUnityMouseSim {
 			
 			gestureWorksCore.AddEvent(updt_mouseEventB);
 			
-			if(MouseCirclesEnabled)
+			if(ShowMousePoints)
 			{
 				if(mouseCircles.ContainsKey(rightAMouseEventId))
 				{
@@ -324,7 +317,7 @@ public class GestureWorksUnityMouseSim {
 			
 			gestureWorksCore.AddEvent(rem_mouseEventB);
 			
-			if(MouseCirclesEnabled)
+			if(ShowMousePoints)
 			{
 				if(mouseCircles.ContainsKey(rightAMouseEventId))
 				{

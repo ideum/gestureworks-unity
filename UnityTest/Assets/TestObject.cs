@@ -17,8 +17,8 @@ public class TestObject : TouchObject {
 	
 	public void NDrag(GestureEvent gEvent)
 	{
-		// MoveObjectInCameraPlane(gEvent);
-		
+		MoveObjectInCameraPlane(gEvent);
+		return;
 		float scale = 0.002f;
 		float dX = gEvent.Values["drag_dx"] * scale;
 		float dY = gEvent.Values["drag_dy"] * Flipped * scale;
@@ -40,10 +40,7 @@ public class TestObject : TouchObject {
 	
 	public void NScale(GestureEvent gEvent)
 	{
-		// Having some issues with scaling
-		return;
-		
-		float scale = 0.5f;
+		float scale = 0.005f;
 		if(!Application.isEditor)
 		{
 			scale = 0.01f;

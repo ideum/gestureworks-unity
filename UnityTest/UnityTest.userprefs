@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GestureWorks\Unity\TouchObject.cs">
+    <Files>
+      <File FileName="Assets\SwitchSceneDrag.cs" Line="21" Column="3" />
+      <File FileName="Assets\Editor\PostBuildProcessor.cs" Line="1" Column="1" />
+      <File FileName="Assets\GestureWorks\Unity\GestureWorksUnity.cs" Line="384" Column="15" />
+      <File FileName="Assets\GestureWorks\Unity\TouchObject.cs" Line="64" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
