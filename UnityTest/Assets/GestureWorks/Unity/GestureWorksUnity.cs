@@ -117,8 +117,14 @@ public class GestureWorksUnity
 	private bool forceMouseSimEnabled = false;
 	public bool ForceMouseSimEnabled
 	{
-		set { forceMouseSimEnabled = value; }
 		get { return forceMouseSimEnabled; }
+		set { forceMouseSimEnabled = value; }
+	}
+	
+	public float MouseTwoPointSimStartDistance
+	{
+		get { return mouseSimulator.MouseTwoPointSimStartDistance; }
+		set { mouseSimulator.MouseTwoPointSimStartDistance = value; }	
 	}
 	
 	public bool ShowMousePoints

@@ -66,7 +66,12 @@ public class GestureWorksUnityMouseSim {
 		}
 	}
 	
-	private const float RightMinDistance = 32.0f;
+	private float rightMinDistance = 32.0f;
+	public float MouseTwoPointSimStartDistance
+	{
+		get { return rightMinDistance; }
+		set { rightMinDistance = value; }
+	}
 	
 	private bool mouseCirclesEnabled = true;
 	public bool MouseCirclesEnabled
@@ -205,10 +210,9 @@ public class GestureWorksUnityMouseSim {
 		// Mouse DOWN RIGHT
 		if(Input.GetMouseButtonDown(1))
 		{
-			rightMouseBasePosition = Input.mousePosition;
-			prevMousePosition = Input.mousePosition;
 			Vector3 pointA, pointB;
-			FindRightMousePositions(Input.mousePosition, out pointA, out pointB);
+			FindRightMousePositionsStart(Input.mousePosition, out pointA, out pointB);
+			prevMousePosition = Input.mousePosition;
 			
 			Vector2 mousePosA = GameCamera.ScreenToViewportPoint(pointA);
 			TouchEvent new_mouseEventA = new TouchEvent();
@@ -358,23 +362,26 @@ public class GestureWorksUnityMouseSim {
 		touchEvent.R = 0.0f;	
 	}
 	
+	private void FindRightMousePositionsStart(Vector3 mousePosition, out Vector3 pointA, out Vector3 pointB)
+	{
+		pointA = new Vector3(mousePosition.x, mousePosition.y, 0.0f);
+		rightMouseBasePosition = pointA - new Vector3(rightMinDistance, 0.0f, 0.0f);
+		pointB = rightMouseBasePosition - new Vector3(rightMinDistance, 0.0f, 0.0f);
+	}
+	
 	private void FindRightMousePositions(Vector3 mousePosition, out Vector3 pointA, out Vector3 pointB)
 	{
-		if(mousePosition == rightMouseBasePosition)
-		{
-			pointA = new Vector3(mousePosition.x + RightMinDistance, mousePosition.y, 0.0f);
-			pointB = new Vector3(mousePosition.x - RightMinDistance, mousePosition.y, 0.0f);
-			return;
-		}
-		
-		// Currently point A matches new mouse
 		pointA = new Vector3(mousePosition.x, mousePosition.y, 0.0f);
 		
 		Vector3 directionToMouseBase = rightMouseBasePosition - mousePosition;
 		float distance = directionToMouseBase.magnitude;
-		distance = Mathf.Max(distance, RightMinDistance);
 		
 		directionToMouseBase.Normalize();
+		
+		if(distance <= 0.0f)
+		{
+			directionToMouseBase = new Vector3(1.0f, 0.0f, 0.0f);
+		}
 		
 		Vector3 newPosition = rightMouseBasePosition + directionToMouseBase * distance;
 	

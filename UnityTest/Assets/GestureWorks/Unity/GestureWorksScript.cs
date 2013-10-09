@@ -46,6 +46,11 @@ public class GestureWorksScript : MonoBehaviour {
 	public bool ForceMouseSimEnabled = false;
 	
 	/// <summary>
+	/// The mouse two point sim start distance.
+	/// </summary>
+	public float MouseTwoPointSimStartDistance = 32.0f;
+	
+	/// <summary>
 	/// Have pressing the escape key exit the application.
 	/// </summary>
 	public bool EscapeKeyExitApplication = false;
@@ -84,6 +89,7 @@ public class GestureWorksScript : MonoBehaviour {
 		GestureWorksUnity.Instance.LogInitialization = LogInitializationDetails;
 		GestureWorksUnity.Instance.LogInputEnabled = LogInput;
 		GestureWorksUnity.Instance.ForceMouseSimEnabled = ForceMouseSimEnabled;
+		GestureWorksUnity.Instance.MouseTwoPointSimStartDistance = MouseTwoPointSimStartDistance;
 		
 		if(!GestureWorksUnity.Instance.Initialized) {
 			GestureWorksUnity.Instance.Initialize();
@@ -100,6 +106,11 @@ public class GestureWorksScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if(GestureWorksUnity.Instance.MouseSimEnabled) {
+			GestureWorksUnity.Instance.MouseTwoPointSimStartDistance = MouseTwoPointSimStartDistance;	
+		}
+		
 		GestureWorksUnity.Instance.Update(Time.deltaTime);
 	}
 	
