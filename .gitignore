@@ -248,6 +248,13 @@ Tutorial_04_InteractiveClock/*.sln
 Tutorial_04_InteractiveClock/Temp*
 Tutorial_04_InteractiveClock/*.csproj
 
+MiniTutorial_MovementFollowingCamera/Assets/GestureWorks/Core/GestureWorksCore*.*
+MiniTutorial_MovementFollowingCamera/Library/*
+MiniTutorial_MovementFollowingCamera/*.vcproj
+MiniTutorial_MovementFollowingCamera/*.sln
+MiniTutorial_MovementFollowingCamera/Temp*
+MiniTutorial_MovementFollowingCamera/*.csproj
+
 MiniTutorial_ChangingScenes/Assets/GestureWorks/Core/GestureWorksCore*.*
 MiniTutorial_ChangingScenes/Library/*
 MiniTutorial_ChangingScenes/*.vcproj
