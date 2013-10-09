@@ -77,13 +77,25 @@ namespace GestureWorksCoreNET.Unity {
 			
 			Ray dragRay = cam.ScreenPointToRay(new Vector3(screenX, screenY, 0.0f));
 			
-			float enter;
-			if(!plane.Raycast(dragRay, out enter))
+			float dragEnter;
+			if(!plane.Raycast(dragRay, out dragEnter))
 			{
 				return;	
 			}
 			
-			gameObject.transform.position = dragRay.origin + dragRay.direction * enter;
+			Vector3 newPosition = dragRay.origin + dragRay.direction * dragEnter;
+			
+			Ray prevRay = cam.ScreenPointToRay(new Vector3(screenX - dX, screenY - dY, 0.0f));
+			
+			float prevEnter;
+			if(!plane.Raycast(prevRay, out prevEnter))
+			{
+				return;	
+			}
+			
+			Vector3 prevPosition = prevRay.origin + prevRay.direction * prevEnter;
+			
+			gameObject.transform.Translate(newPosition - prevPosition);
 		}
 		
 	}
