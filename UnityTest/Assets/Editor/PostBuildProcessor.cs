@@ -15,6 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -52,7 +54,13 @@ public class PostBuildProcessor {
 				pathToNewDataFolder + gmlFileName);
 			
 			FileUtil.CopyFileOrDirectory(pathToAssetsFolder + GestureWorksUnity.Instance.DllFilePathEditor + coreDllFileName, 
-				pathToNewDataFolder + coreDllFileName);			
+				pathToNewDataFolder + coreDllFileName);
+			
+			Dictionary<string, string> configEntries = new Dictionary<string, string>();
+			
+			configEntries.Add("ProductName", PlayerSettings.productName);
+			
+			GestureWorksConfiguration.WriteConfigurationFile(pathToNewDataFolder, configEntries);
 		}
     }
 }

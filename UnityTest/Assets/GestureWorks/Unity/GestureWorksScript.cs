@@ -66,11 +66,6 @@ public class GestureWorksScript : MonoBehaviour {
 	public bool LogInput = false;
 	
 	/// <summary>
-	/// The name of the game window for this game at runtime.
-	/// </summary>
-	public string GameWindowName = "";
-	
-	/// <summary>
 	/// Time in seconds since last touch event
 	/// </summary>
 	public float TimeSinceLastEvent
@@ -84,7 +79,6 @@ public class GestureWorksScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
-		GestureWorksUnity.Instance.GameWindowName = GameWindowName;
 		GestureWorksUnity.Instance.EscapeKeyExitApplication = EscapeKeyExitApplication;
 		GestureWorksUnity.Instance.LogInitialization = LogInitializationDetails;
 		GestureWorksUnity.Instance.LogInputEnabled = LogInput;

@@ -58,6 +58,14 @@ public class GestureWorksUnity
 	private string dllFilePath;
 	private string gmlFilePath;
 	
+	public string ApplicationDataPath
+	{
+		get
+		{
+			return Application.dataPath.Replace("/", "\\");	
+		}
+	}
+	
 	private static GestureWorksUnity instance = null;
 	public static GestureWorksUnity Instance
 	{
@@ -222,22 +230,16 @@ public class GestureWorksUnity
 		}
 	}
 	
-	private string gameWindowName = "";
-	
 	public string GameWindowName
 	{
-		get 
+		get
 		{
-			if(string.IsNullOrEmpty(gameWindowName))
-			{
-				Debug.LogWarning("GameWindow name not properly set");
-				
-				return Application.loadedLevelName;
-			}
-			
-			return gameWindowName; 
+#if UNITY_EDITOR
+			return PlayerSettings.productName;
+#else
+			return GestureWorksConfiguration.Instance.KeyValue("ProductName");
+#endif
 		}
-		set { gameWindowName = value; }
 	}
 	
 	private Camera gameCamera = null;
@@ -321,6 +323,8 @@ public class GestureWorksUnity
 			return;
 		}
 		
+		GestureWorksConfiguration.Instance.Initialize();
+		
 		if(!FindSetupInfo())
 		{
 			return;
@@ -345,16 +349,16 @@ public class GestureWorksUnity
 			
 			Debug.Log("== NOTE: To touch the game, you must build and run ==");
 			
-			dllFilePath = Application.dataPath.Replace("/", "\\") + DllFilePathEditor + DllFileName;
-			gmlFilePath = Application.dataPath.Replace("/", "\\") + GmlFilePathEditor + GmlFileName;
+			dllFilePath = ApplicationDataPath + DllFilePathEditor + DllFileName;
+			gmlFilePath = ApplicationDataPath + GmlFilePathEditor + GmlFileName;
 		} 
 		else 
 		{
 			// Running exe 
 			mouseSimEnabled = ForceMouseSimEnabled;
 			windowName = GameWindowName;
-			dllFilePath = Application.dataPath.Replace("/", "\\") + "\\" + DllFileName;
-			gmlFilePath = Application.dataPath.Replace("/", "\\") + "\\" + GmlFileName;
+			dllFilePath = ApplicationDataPath + "\\" + DllFileName;
+			gmlFilePath = ApplicationDataPath + "\\" + GmlFileName;
 		}
 		
 		if(!File.Exists(dllFilePath))
