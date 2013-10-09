@@ -248,3 +248,17 @@ Tutorial_04_InteractiveClock/*.sln
 Tutorial_04_InteractiveClock/Temp*
 Tutorial_04_InteractiveClock/*.csproj
 
+MiniTutorial_ChangingScenes/Assets/GestureWorks/Core/GestureWorksCore*.*
+MiniTutorial_ChangingScenes/Library/*
+MiniTutorial_ChangingScenes/*.vcproj
+MiniTutorial_ChangingScenes/*.sln
+MiniTutorial_ChangingScenes/Temp*
+MiniTutorial_ChangingScenes/*.csproj
+
+ExtendedClock/Assets/GestureWorks/Core/GestureWorksCore*.*
+ExtendedClock/Assets/Plugins/Gestureworks/Core/GestureWorksCore*.*
+ExtendedClock/Library/*
+ExtendedClock/*.vcproj
+ExtendedClock/*.sln
+ExtendedClock/Temp*
+ExtendedClock/*.csproj
