@@ -46,6 +46,11 @@ public class GestureWorksScript : MonoBehaviour {
 	public bool ForceMouseSimEnabled = false;
 	
 	/// <summary>
+	/// Have pressing the escape key exit the application.
+	/// </summary>
+	public bool EscapeKeyExitApplication = false;
+	
+	/// <summary>
 	/// Log details of GestureWorks initialization.
 	/// </summary>
 	public bool LogInitializationDetails = true;
@@ -75,6 +80,7 @@ public class GestureWorksScript : MonoBehaviour {
 	void Start () {
 		
 		GestureWorksUnity.Instance.GameWindowName = GameWindowName;
+		GestureWorksUnity.Instance.EscapeKeyExitApplication = EscapeKeyExitApplication;
 		GestureWorksUnity.Instance.LogInitialization = LogInitializationDetails;
 		GestureWorksUnity.Instance.LogInputEnabled = LogInput;
 		GestureWorksUnity.Instance.ForceMouseSimEnabled = ForceMouseSimEnabled;

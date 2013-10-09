@@ -295,6 +295,8 @@ public class GestureWorksUnity
 	
 	private HitManager hitManager;
 	
+	public bool EscapeKeyExitApplication { get; set; }
+	
 	public bool LogInitialization { get; set; }
 	
 	public bool LogInputEnabled { get; set; }
@@ -508,6 +510,11 @@ public class GestureWorksUnity
 	
 	public void Update(float deltaTime)
 	{
+		if(EscapeKeyExitApplication && Input.GetKeyDown(KeyCode.Escape))
+		{
+			Application.Quit();	
+		}
+		
 		if(!initialized || !loaded)
 		{
 			return;
