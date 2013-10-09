@@ -26,6 +26,6 @@ public class SwitchSceneDrag : TouchObject {
 		
 		Debug.Log("Loading level GestureWorksUnity.Instance.SwitchScenes");
 		
-		((GestureworksScript)FindObjectOfType(typeof(GestureworksScript))).SwitchScenes("UnityTestSwitchScene");	
+		((GestureWorksScript)FindObjectOfType(typeof(GestureWorksScript))).SwitchScenes("UnityTestSwitchScene");	
 	}
 }

@@ -4,7 +4,7 @@
 //  Copyright 2011-2013 Ideum
 //  All Rights Reserved.
 //
-//  Gestureworks Core
+//  GestureWorks Unity
 //
 //  File:    TouchObject.cs
 //  Authors:  Ideum

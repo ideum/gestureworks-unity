@@ -4,9 +4,9 @@
 //  Copyright 2011-2013 Ideum
 //  All Rights Reserved.
 //
-//  Gestureworks Unity
+//  GestureWorks Unity
 //
-//  File:    GestureworksScript.cs
+//  File:    GestureWorksScript.cs
 //  Authors:  Ideum
 //
 //  NOTICE: Ideum permits you to use, modify, and distribute this file only
@@ -17,7 +17,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GestureworksScript : MonoBehaviour {
+public class GestureWorksScript : MonoBehaviour {
 	
 	/// <summary>
 	/// Show touch points dots onscreen.

@@ -4,7 +4,7 @@
 //  Copyright 2011-2013 Ideum
 //  All Rights Reserved.
 //
-//  Gestureworks Unity
+//  GestureWorks Unity
 //
 //  File:    HitManager.cs
 //  Authors:  Ideum

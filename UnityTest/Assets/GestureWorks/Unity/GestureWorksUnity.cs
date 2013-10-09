@@ -249,6 +249,27 @@ public class GestureWorksUnity
 		}
 	}
 	
+	private string GameCameraGestureObjectName
+	{
+		get
+		{
+			Camera camera = GameCamera;
+			if(camera == null)
+			{
+				return "";	
+			}
+			
+			GameObject cameraObject = camera.gameObject;
+			TouchObject touch = cameraObject.GetComponent<TouchObject>();
+			if(touch == null)
+			{
+				return "";
+			}
+			
+			return touch.GestureObjectName;
+		}
+	}
+	
 	private float timeSinceLastEvent = 0.0f;
 	public float TimeSinceLastEvent
 	{
@@ -297,7 +318,7 @@ public class GestureWorksUnity
 			return;
 		}
 		
-		if(!InitializeGestureworks())
+		if(!InitializeGestureWorks())
 		{
 			return;	
 		}
@@ -331,14 +352,14 @@ public class GestureWorksUnity
 		if(!File.Exists(dllFilePath))
 		{
 			initializationError = "Could not find dll at " + dllFilePath;
-			Debug.LogError(initializationError + " Stopping Gestureworks Initialization");
+			Debug.LogError(initializationError + " Stopping GestureWorks Initialization");
 			return false;
 		}
 		
 		if(!File.Exists(gmlFilePath))
 		{
 			initializationError = "Could not find gml at " + dllFilePath;
-			Debug.LogError(initializationError + " Stopping Gestureworks Initialization");
+			Debug.LogError(initializationError + " Stopping GestureWorks Initialization");
 			return false;
 		}
 		
@@ -351,7 +372,7 @@ public class GestureWorksUnity
 		return true;
 	}
 	
-	private bool InitializeGestureworks()
+	private bool InitializeGestureWorks()
 	{	
 		gestureWorksCore = new GestureWorks();
 		
@@ -360,7 +381,7 @@ public class GestureWorksUnity
 		if(!dllLoaded)
 		{
 			initializationError = "Could not load dll " + dllFilePath;
-			Debug.LogError(initializationError + " Stopping Gestureworks Initialization");	
+			Debug.LogError(initializationError + " Stopping GestureWorks Initialization");	
 			return false;
 		}
 		
@@ -371,7 +392,7 @@ public class GestureWorksUnity
 		if(!gmlLoaded)
 		{
 			initializationError = "Could not load gml " + gmlFilePath ;
-			Debug.LogError(initializationError + " Stopping Gestureworks Initialization");	
+			Debug.LogError(initializationError + " Stopping GestureWorks Initialization");	
 			return false;
 		}
 		
@@ -379,7 +400,7 @@ public class GestureWorksUnity
 		if(!windowLoaded)
 		{
 			initializationError = "Could not register window for touch " + windowName;
-			Debug.LogError(initializationError + " Stopping Gestureworks Initialization");
+			Debug.LogError(initializationError + " Stopping GestureWorks Initialization");
 			return false;
 		}
 		
@@ -387,7 +408,7 @@ public class GestureWorksUnity
 		
 		mouseSimulator.Initialize(gestureWorksCore);
 		
-		Debug.Log("Success initializing Gestureworks");
+		Debug.Log("Success initializing GestureWorks");
 		
 		return true;
 	}
@@ -620,7 +641,11 @@ public class GestureWorksUnity
 					
 				if(!touchPointHitSomething)
 				{
-					gestureWorksCore.AddTouchPoint(GameCamera.name, pEvent.PointId);
+					string cameraGestureName = GameCameraGestureObjectName;
+					if(!string.IsNullOrEmpty(cameraGestureName))
+					{
+						gestureWorksCore.AddTouchPoint(cameraGestureName, pEvent.PointId);
+					}
 				}
 			}
 				break;

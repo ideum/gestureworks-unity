@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GestureWorks\Unity\GestureWorksScript.cs">
+    <Files>
+      <File FileName="Assets\GestureWorks\Unity\GestureWorksScript.cs" Line="49" Column="47" />
+      <File FileName="Assets\SwitchSceneDrag.cs" Line="5" Column="1" />
+      <File FileName="Assets\GestureWorks\Unity\GestureWorksUnity.cs" Line="514" Column="4" />
+      <File FileName="Assets\GestureWorks\Unity\GestureWorksUnityMouseSim.cs" Line="26" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
