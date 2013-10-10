@@ -174,7 +174,9 @@ public class GestureWorksUnity
 		get
 		{
 #if UNITY_EDITOR
+			
 			string[] scenePathParts = EditorApplication.currentScene.Split(char.Parse("/"));
+			
 			if(scenePathParts.Length <= 0)
 			{
 				Debug.LogWarning("Could not find current scene name");	
@@ -182,7 +184,14 @@ public class GestureWorksUnity
 				return "";
 			}
 			
-			return scenePathParts[scenePathParts.Length - 1];
+			string sceneName = scenePathParts[scenePathParts.Length - 1];
+			
+			if(string.IsNullOrEmpty(sceneName))
+			{
+				return "Untitled";	
+			}
+			
+			return sceneName;
 #else
 			return Application.loadedLevelName;
 #endif
