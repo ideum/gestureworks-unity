@@ -262,6 +262,13 @@ MiniTutorial_ChangingScenes/*.sln
 MiniTutorial_ChangingScenes/Temp*
 MiniTutorial_ChangingScenes/*.csproj
 
+MiniTutorial_RegisteringTouchObjects/Assets/GestureWorks/Core/GestureWorksCore*.*
+MiniTutorial_RegisteringTouchObjects/Library/*
+MiniTutorial_RegisteringTouchObjects/*.vcproj
+MiniTutorial_RegisteringTouchObjects/*.sln
+MiniTutorial_RegisteringTouchObjects/Temp*
+MiniTutorial_RegisteringTouchObjects/*.csproj
+
 ExtendedClock/Assets/GestureWorks/Core/GestureWorksCore*.*
 ExtendedClock/Assets/Plugins/Gestureworks/Core/GestureWorksCore*.*
 ExtendedClock/Library/*

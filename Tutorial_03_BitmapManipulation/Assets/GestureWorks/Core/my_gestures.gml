@@ -220,7 +220,7 @@
 			</algorithm>
 		  </analysis>
 		  <mapping>
-			<update dispatch_type="discrete" dispatch_mode="batch" dispatch_interval="50">
+			<update dispatch_type="discrete" dispatch_mode="batch" dispatch_interval="1000">
 			  <gesture_event>
 				<property ref="tap_x"/>
 				<property ref="tap_y"/>
@@ -251,7 +251,7 @@
 			</algorithm>
 		  </analysis>
 		  <mapping>
-			<update dispatch_type="discrete" dispatch_mode="batch" dispatch_interval="50">
+			<update dispatch_type="discrete" dispatch_mode="batch" dispatch_interval="1000">
 			  <gesture_event>
 				<property ref="tap_x"/>
 				<property ref="tap_y"/>

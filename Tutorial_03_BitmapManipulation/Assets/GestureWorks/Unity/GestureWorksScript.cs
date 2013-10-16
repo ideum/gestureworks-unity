@@ -16,6 +16,8 @@
 
 using UnityEngine;
 using System.Collections;
+using GestureWorksCoreNET;
+using GestureWorksCoreNET.Unity;
 
 public class GestureWorksScript : MonoBehaviour {
 	
@@ -76,6 +78,8 @@ public class GestureWorksScript : MonoBehaviour {
 		}
 	}
 	
+	private const float ThreadPollUpdateDelayInterval = 0.1f;
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -89,7 +93,7 @@ public class GestureWorksScript : MonoBehaviour {
 			GestureWorksUnity.Instance.Initialize();
 		}
 		else {
-			GestureWorksUnity.Instance.RegisterGestureObjects();
+			GestureWorksUnity.Instance.RegisterTouchObjects();
 		}
 		
 		GestureWorksUnity.Instance.ShowTouchPoints = ShowTouchPoints;
@@ -109,6 +113,9 @@ public class GestureWorksScript : MonoBehaviour {
 	}
 	
 	void OnApplicationQuit() {
+		
+		GestureWorksUnity.Instance.PauseGestureProcessing = true;
+		
 		GestureWorksUnity.Instance.DeregisterAllTouchObjects();
 		
 		GestureWorksUnity.Instance.ClearTouchPoints();
@@ -134,7 +141,7 @@ public class GestureWorksScript : MonoBehaviour {
 		{
 			while(GestureWorksUnity.Instance.ProcessingGestures)
 			{
-				yield return new WaitForSeconds(0.1f);
+				yield return new WaitForSeconds(ThreadPollUpdateDelayInterval);
 			}	
 		}
 		else
@@ -156,6 +163,80 @@ public class GestureWorksScript : MonoBehaviour {
 			{
 				Application.LoadLevel(newSceneName);	
 			}
+		}
+	}
+	
+	public void RegisterTouchObject(TouchObject obj) {
+		
+		StartCoroutine(RegisterTouchObjectRoutine(obj));	
+	}
+	
+	public IEnumerator RegisterTouchObjectRoutine(TouchObject obj) {
+		
+		GestureWorksUnity.Instance.PauseGestureProcessing = true;
+		
+		if(GestureWorksUnity.Instance.ProcessingGestures)
+		{
+			while(GestureWorksUnity.Instance.ProcessingGestures)
+			{
+				yield return new WaitForSeconds(ThreadPollUpdateDelayInterval);
+			}	
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.0f);	
+		}
+		
+		Debug.Log ("Registering touch object " + obj.GestureObjectName);
+		
+		GestureWorksUnity.Instance.RegisterTouchObject(obj);
+		
+		GestureWorksUnity.Instance.PauseGestureProcessing = false;
+	}
+	
+	public void DeregisterTouchObject(TouchObject obj) {
+		
+		if(!obj)
+		{
+			return;
+		}
+		
+		StartCoroutine(DeregisterTouchObjectRoutine(obj, false));
+	}
+	
+	public void DeregisterAndDestroyTouchObject(TouchObject obj) {
+		
+		if(!obj)
+		{
+			return;
+		}
+		
+		StartCoroutine(DeregisterTouchObjectRoutine(obj, true));
+	}
+	
+	public IEnumerator DeregisterTouchObjectRoutine(TouchObject obj, bool destroyWhenComplete) {
+		
+		GestureWorksUnity.Instance.PauseGestureProcessing = true;
+		
+		if(GestureWorksUnity.Instance.ProcessingGestures)
+		{
+			while(GestureWorksUnity.Instance.ProcessingGestures)
+			{
+				yield return new WaitForSeconds(ThreadPollUpdateDelayInterval);
+			}	
+		}
+		else
+		{
+			yield return new WaitForSeconds(0.0f);	
+		}
+		
+		GestureWorksUnity.Instance.DeregisterTouchObject(obj);
+		
+		GestureWorksUnity.Instance.PauseGestureProcessing = false;
+		
+		if(destroyWhenComplete)
+		{
+			Destroy(obj.gameObject);	
 		}
 	}
 }

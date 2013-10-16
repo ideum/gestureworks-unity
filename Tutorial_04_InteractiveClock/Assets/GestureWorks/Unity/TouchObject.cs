@@ -97,6 +97,5 @@ namespace GestureWorksCoreNET.Unity {
 			
 			gameObject.transform.position += (newPosition - prevPosition);
 		}
-		
 	}
 }

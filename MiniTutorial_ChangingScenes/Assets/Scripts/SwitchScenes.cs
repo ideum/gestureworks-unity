@@ -9,11 +9,6 @@ public class SwitchScenes : TouchObject {
 	
 	private bool switchedScenes = false;
 	
-	public void NDrag(GestureEvent gEvent)
-	{
-		Switch();
-	}
-	
 	public void Tap(GestureEvent gEvent)
 	{		
 		Switch();

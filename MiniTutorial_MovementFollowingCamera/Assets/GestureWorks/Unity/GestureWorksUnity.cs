@@ -114,6 +114,13 @@ public class GestureWorksUnity
 		set { processingGestures = value; }
 	}
 	
+	private volatile bool pauseGestureProcessing = false;
+	public bool PauseGestureProcessing
+	{
+		get { return pauseGestureProcessing; }
+		set { pauseGestureProcessing = value; }
+	}
+	
 	private bool mouseSimEnabled = false;
 	public bool MouseSimEnabled
 	{
@@ -346,7 +353,7 @@ public class GestureWorksUnity
 		
 		initialized = true;
 		
-		RegisterGestureObjects();
+		RegisterTouchObjects();
 	}
 	
 	private bool FindSetupInfo()
@@ -434,7 +441,7 @@ public class GestureWorksUnity
 		return true;
 	}
 	
-	public void RegisterGestureObjects()
+	public void RegisterTouchObjects()
 	{	
 		if(!initialized)
 		{
@@ -447,7 +454,7 @@ public class GestureWorksUnity
 		TouchObject[] touchObjects = GameObject.FindObjectsOfType(typeof(TouchObject)) as TouchObject[];
 		foreach(TouchObject obj in touchObjects)
 		{
-			RegisterGestureObject(obj);
+			RegisterTouchObject(obj);
 		}
 		
 		if(LogInitialization)
@@ -458,7 +465,7 @@ public class GestureWorksUnity
 		loaded = true;
 	}
 	
-	public bool RegisterGestureObject(TouchObject obj)
+	public bool RegisterTouchObject(TouchObject obj)
 	{
 		if(!initialized)
 		{
@@ -534,7 +541,7 @@ public class GestureWorksUnity
 			Application.Quit();	
 		}
 		
-		if(!initialized || !loaded)
+		if(!initialized || !loaded || pauseGestureProcessing)
 		{
 			return;
 		}

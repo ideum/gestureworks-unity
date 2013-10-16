@@ -44,7 +44,7 @@ public class GestureWorksConfiguration
 		{
 			if(!Application.isEditor)
 			{
-				Debug.LogError("Could not find read gestureworks configuration file: " + filePath);
+				Debug.LogError("Could not read gestureworks configuration file: " + filePath);
 			}
 			
 			return false;
