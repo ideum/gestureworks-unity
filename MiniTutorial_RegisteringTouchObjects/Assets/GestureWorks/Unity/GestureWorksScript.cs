@@ -187,8 +187,6 @@ public class GestureWorksScript : MonoBehaviour {
 			yield return new WaitForSeconds(0.0f);	
 		}
 		
-		Debug.Log ("Registering touch object " + obj.GestureObjectName);
-		
 		GestureWorksUnity.Instance.RegisterTouchObject(obj);
 		
 		GestureWorksUnity.Instance.PauseGestureProcessing = false;
