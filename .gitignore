@@ -276,3 +276,11 @@ ExtendedClock/*.vcproj
 ExtendedClock/*.sln
 ExtendedClock/Temp*
 ExtendedClock/*.csproj
+
+GestureworksUnityTutorials/Assets/GestureWorks/Core/GestureWorksCore*.*
+GestureworksUnityTutorials/Assets/Plugins/Gestureworks/Core/GestureWorksCore*.*
+GestureworksUnityTutorials/Library/*
+GestureworksUnityTutorials/*.vcproj
+GestureworksUnityTutorials/*.sln
+GestureworksUnityTutorials/Temp*
+GestureworksUnityTutorials/*.csproj
