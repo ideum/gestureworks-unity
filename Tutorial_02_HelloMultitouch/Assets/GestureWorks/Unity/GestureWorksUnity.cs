@@ -13,7 +13,7 @@
 //  in accordance with the terms of the license agreement accompanying it.
 //
 ////////////////////////////////////////////////////////////////////////////////
-
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ using GestureWorksCoreNET.Unity;
 
 public class GestureWorksUnity 
 {	
-	private string dllFileName = "GestureworksCore32.dll";
+	private string dllFileName = "GestureWorksCore32.dll";
 	public string DllFileName
 	{
 		get { return dllFileName; }
@@ -412,9 +412,8 @@ public class GestureWorksUnity
 			Debug.LogError(initializationError + " Stopping GestureWorks Initialization");	
 			return false;
 		}
-		
-		gestureWorksCore.InitializeGestureWorks(Screen.width, Screen.height);
-		
+        gestureWorksCore.InitializeGestureWorks(Screen.width, Screen.height);
+
 		bool gmlLoaded = gestureWorksCore.LoadGML(gmlFilePath);
 		
 		if(!gmlLoaded)
@@ -427,14 +426,7 @@ public class GestureWorksUnity
 		bool windowLoaded = gestureWorksCore.RegisterWindowForTouchByName(windowName);
 		if(!windowLoaded)
 		{
-			// Try with DX 11
-			windowLoaded = gestureWorksCore.RegisterWindowForTouchByName(windowName + " <DX11>");
-			if(!windowLoaded)
-			{
-				initializationError = "Could not register window for touch " + windowName;
-				Debug.LogError(initializationError + " Stopping GestureWorks Initialization");
-				return false;
-			}
+            windowLoaded = gestureWorksCore.RegisterWindowForTouch(gestureWorksCore.GetActiveWindow());
 		}
 		
 		hitManager = new HitManager();
