@@ -425,17 +425,11 @@ public class GestureWorksUnity
 		}
 		
 		bool windowLoaded = gestureWorksCore.RegisterWindowForTouchByName(windowName);
-		if(!windowLoaded)
-		{
-			// Try with DX 11
-			windowLoaded = gestureWorksCore.RegisterWindowForTouchByName(windowName + " <DX11>");
-			if(!windowLoaded)
-			{
-				initializationError = "Could not register window for touch " + windowName;
-				Debug.LogError(initializationError + " Stopping GestureWorks Initialization");
-				return false;
-			}
-		}
+
+        if (!windowLoaded)
+        {
+            windowLoaded = gestureWorksCore.RegisterWindowForTouch(gestureWorksCore.GetActiveWindow());
+        }
 		
 		hitManager = new HitManager();
 		
